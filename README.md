@@ -86,7 +86,7 @@ You can deploy:
 
 Natan Muleta
 Student at Adama Science and Technology University
-https://github.com/natanmuletahunde <!-- Replace with your actual GitHub if needed -->
+https://github.com/natanmuletahunde
 📃 License
 
 This project is licensed under the MIT License.
