@@ -4,13 +4,25 @@ import { assets } from '../assets/assets'
 
 const Sidebar = () => {
   return (
-    <div className="w-full h-screen bg-gray-100 p-4 shadow-md">
-      <div className="flex items-center space-x-3 hover:bg-gray-200 p-3 rounded-md transition duration-200">
-        <NavLink to="/add" className="flex items-center space-x-2">
-          <img src={assets.add_icon} alt="Add Icon" className="w-6 h-6" />
-          <p className="text-sm font-medium text-gray-700">Add Items</p>
-        </NavLink>
-      </div>
+    <div className='w-[18%] min-h-screen border-r-2'>
+        <div className='flex flex-col gap-4  pt-6 pl-[20%] text-[-15px] '>
+            <NavLink className='flex items-center gap-3 border border-gray-300 border-r-0 px-2 rounded-l' to="/add">
+              <img className='w-5 h-5' src={assets.add_icon} alt="" />
+              <p className='block '>Add Items</p>
+            </NavLink>
+
+            <NavLink className='flex items-center gap-3 border border-gray-300 border-r-0 px-2 rounded-l' to="/list">
+              <img className='w-5 h-5' src={assets.order_icon} alt="" />
+              <p className='block '>List Items</p>
+            </NavLink>
+
+            <NavLink className='flex items-center gap-3 border border-gray-300 border-r-0 px-2 rounded-l' to="/orders">
+              <img className='w-5 h-5' src={assets.order_icon} alt="" />
+              <p className='block'>Order Items</p>
+            </NavLink>
+
+        </div>
+
     </div>
   )
 }
