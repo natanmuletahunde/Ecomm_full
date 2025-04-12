@@ -76,7 +76,7 @@ const addProduct = async ( req,res)=>{
 
 
 
-// function for list product 
+
 const listProduct = async (req,res)=>{
       try {
         const products = await productModel.find({});
