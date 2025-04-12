@@ -37,23 +37,71 @@ const addProduct = async ( req,res)=>{
                res.json({success:true, message:'Product added successfully'})
 
             console.log( name,price,description,category ,subCategory,sizes,bestseller)
-            console.log(imagesUrl)         
+            console.log(imagesUrl) 
+            res.json({})        
     } catch (error) {
           console.log({success:false, message:error.message})
     }
-    res.json({})
+   
 }
+
+//     const addProduct = async (req, res) => {
+//         try {
+//           const { name, price, description, category, subCategory, sizes, bestseller } = req.body;
+      
+//           // Build product data without images
+//           const productData = {
+//             name,
+//             price: Number(price),
+//             description,
+//             category,
+//             subCategory,
+//             sizes,
+//             bestseller: bestseller === 'true' ? true : false,
+//             date: Date.now()
+//           };
+      
+//           console.log(productData);
+      
+//           const product = new productModel(productData);
+//           await product.save();
+      
+//           res.json({ success: true, message: 'Product added successfully' });
+//         } catch (error) {
+//           console.log({ success: false, message: error.message });
+//           res.status(500).json({ success: false, message: 'Server Error' });
+//         }
+//       };
+      
+
+
+
+// function for list product 
+const listProduct = async (req,res)=>{
+      try {
+        const products = await productModel.find({});
+        res.json({success:true,products})
+
+      } catch (error) {
+        console.log({success:false,message:error.message})
+        res.json({success:false,message:error.message})
+      }     
+}    
 // function for remove product  
 
 const removeProduct = async (req,res)=>{
-    
+      
+    try {
+      await productModel.findByIdAndDelete(req.body.id)
+      res.json({success:true,message:'Product removed successfully'})
+    } catch (error) {
+      
+    }
 }
 
-// function for list product 
 
-const listProduct = async (req,res)=>{
-    
-}
+
+
 
 // const for single product 
 
