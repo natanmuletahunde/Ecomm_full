@@ -1,19 +1,10 @@
-import multer from 'multer';
-import path from 'path';
-
-// Configure storage with destination and filename
+import multer from "multer";
+ 
 const storage = multer.diskStorage({
-  destination: function (req, file, callback) {
-    // Store files in 'uploads/' directory
-    callback(null, 'uploads/');
-  },
-  filename: function (req, file, callback) {
-    // Save file with original name (or you can customize this)
-    callback(null, file.originalname);
+  filename:function(req,file,callback){
+    callback(null,file.originalname)
   }
-});
+})
+const upload = multer({storage})
 
-// Create the multer upload middleware
-const upload = multer({ storage });
-
-export default upload;
+export default upload
