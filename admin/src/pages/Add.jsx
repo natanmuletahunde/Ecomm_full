@@ -2,7 +2,12 @@ import React from 'react'
 
 const Add = () => {
   return (
-    <div>Add</div>
+    <Form>
+      
+      <div>
+        <p></p>
+      </div>
+    </Form>
   )
 }
 
