@@ -10,7 +10,7 @@ const Login = ({setToken}) => {
        const [password ,setPassword ]= useState('');
     const onSubmitHandler  = async (e)=>{
         try {    
-            e.preventDefault(); 
+            e.preventDefault();  // to remove the fresh of the page  
             const response = await axios.post(backendUrl + '/api/user/admin',{email,password});
                   
              if(response.data.success)
@@ -18,7 +18,7 @@ const Login = ({setToken}) => {
                setToken(response.data.token);
              }
              else{
-                toast.error(response.data.message);
+                toast.error(response.data.message);  // used for pop out an error 
              }
 
          } catch (error) {
