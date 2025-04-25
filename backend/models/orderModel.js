@@ -10,6 +10,5 @@ const  orderSchema = new mongoose.Schema({
     payment : {type:Boolean ,required:true ,default:false},
     date : {type:Number ,required:true},
 })
-
-const orderModel = mongoose.model.order || mongoose.model('order', orderSchema)
+const orderModel =  mongoose.model.order ||mongoose.model('order', orderSchema)
 export default orderModel
