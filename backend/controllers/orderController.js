@@ -34,7 +34,14 @@ const placeOrderRazorpay = async ()=>{
 }
 // user order data for frontend 
 const allOrders = async ()=>{
-    
+    try {
+      const orders = await orderModel.find({})
+      res.json({orders})
+    } catch (error) {
+      console.log(error)
+      res.json({success:false, message:error.message})
+    }   
+
 }
 //  user orders 
 const userOrders = async ()=>{
