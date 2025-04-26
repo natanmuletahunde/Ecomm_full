@@ -1,5 +1,5 @@
-import orderModel from "../models/orderModel";
-import userModel from "../models/userModel";
+import orderModel from "../models/orderModel.js";
+import userModel from "../models/userModel.js";
 import { Stripe } from 'stripe'
 
 //  global variables 
@@ -104,13 +104,14 @@ const verifyStripe = async (req,res)=>{
     }
 }
 // placing razorpay
-const placeOrderRazorpay = async ()=>{
+const placeOrderRazorpay = async (req,res)=>{
     
 }
 // user order data for frontend 
-const allOrders = async ()=>{
+const allOrders = async (req,res)=>{
     try {
       const orders = await orderModel.find({})
+      console.log("Orders: ",orders)   
       res.json({orders})
     } catch (error) {
       console.log(error)
@@ -119,7 +120,7 @@ const allOrders = async ()=>{
 
 }
 //  user orders 
-const userOrders = async ()=>{
+const userOrders = async (req,res)=>{
       
    try {
        
@@ -133,7 +134,7 @@ const userOrders = async ()=>{
  }
 }
 //update the order status
-const updateStatus = async ()=>{
+const updateStatus = async (req,res)=>{
      try {
        const {orderId , status} = req.body
        await orderModel.findByIdAndUpdate(orderId,{status })

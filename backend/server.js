@@ -23,7 +23,6 @@ if (!fs.existsSync(uploadsDir)) {
 }
 
 // Connect to database and cloudinary
-connectDb();
 connectCloudinary();
 
 // Middlewares
@@ -44,6 +43,7 @@ app.get('/', (req, res) => {
 });
 
 
+connectDb();
 
 // Start server
 app.listen(port, () => {
