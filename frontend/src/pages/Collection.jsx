@@ -14,9 +14,9 @@ const Collection = () => {
     
   const toggleCategory = (e) => {
     if (category.includes(e.target.value)) {
-      setCategory((prev) => prev.filter((item) => item !== e.target.value));
+      setCategory((prev) => prev.filter((item) => item !== e.target.value));  //  used to remove the items from the cart if  there is 
     } else {
-      setCategory((prev) => [...prev, e.target.value]);
+      setCategory((prev) => [...prev, e.target.value]);  // add the items in the cart 
     }
   };
 

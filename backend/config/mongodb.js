@@ -3,10 +3,9 @@ import mongoose from 'mongoose';
 const connectDb = async () => {
   try {
 
-    await mongoose.connect("mongodb+srv://natanmuleta77:nata123ABC@cluster0.mdemnuy.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0", {
-      // useNewUrlParser: true,
-      // useUnifiedTopology: true,
-    });
+
+    await mongoose.connect("mongodb+srv://natanmuleta77:Nathan12345@cluster0.mugunfn.mongodb.net/ecommerce?retryWrites=true&w=majority&appName=Cluster0");
+                            
 
     console.log("✅ MongoDB connected successfully");
   } catch (error) {

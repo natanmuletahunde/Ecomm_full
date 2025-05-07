@@ -1,11 +1,11 @@
 // pages/Add.jsx
 import React, { useState } from 'react';
-import { assets } from '../assets/assets';
+import { assets } from '../assets/assets.js';
 import axios from 'axios';
 import { backendUrl } from '../App';
 import { toast } from 'react-toastify';
 
-const Add = ({ token }) => {
+const Add = ({ token }) => {  // the token is indicate that the usr is authenticated 
   const [image1, setImage1] = useState(false);
   const [image2, setImage2] = useState(false);
   const [image3, setImage3] = useState(false);
@@ -20,13 +20,13 @@ const Add = ({ token }) => {
   const [bestseller, setBestSeller] = useState(false);
 
   const onSubmitHandler = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
       const formData = new FormData();
       formData.append('name', name);
       formData.append('description', description);
       formData.append('category', category);
-      formData.append('subcategory', subcategory);
+      formData.append('subCategory', subcategory);
       formData.append('price', price);
       formData.append('sizes', JSON.stringify(sizes));
       formData.append('bestseller', bestseller);
@@ -35,15 +35,15 @@ const Add = ({ token }) => {
       if (image2) formData.append('image2', image2);
       if (image3) formData.append('image3', image3);
       if (image4) formData.append('image4', image4);
-
+      console.log(formData)
       const response = await axios.post(
         backendUrl + '/api/product/add',
         formData,
         { headers: { token } }
-      );
+      ); //this is used to indicate the send the formData object to db and also send the token to the db 
 
       if (response.data.success) {
-        toast.success(response.data.message);
+        toast.success(response.data.message); 
         setName('');
         setDescription('');
         setImage1(false);
@@ -53,6 +53,7 @@ const Add = ({ token }) => {
         setSizes([]);
         setBestSeller(false);
         setPrice('');
+        //  the above code snippet indicate us to make the all the input data to null 
       } else {
         toast.error(response.data.message);
       }
@@ -61,13 +62,11 @@ const Add = ({ token }) => {
       toast.error(error.message);
     }
   };
-
   const handleSizeToggle = (size) => {
     setSizes((prev) =>
       prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
     );
   };
-
   return (
     <form onSubmit={onSubmitHandler} className='p-4'>
       <div className='flex flex-col w-full gap-3'>
@@ -96,7 +95,7 @@ const Add = ({ token }) => {
 
       <div className='mt-4'>
         <p className='mb-2'>Product name</p>
-        <input
+        <input 
           onChange={(e) => setName(e.target.value)}
           value={name}
           className='w-full max-w-[500px] px-3 py-2 border'

@@ -10,7 +10,7 @@ const Login = ({setToken}) => {
        const [password ,setPassword ]= useState('');
     const onSubmitHandler  = async (e)=>{
         try {    
-            e.preventDefault();  // to remove the fresh of the page  
+            e.preventDefault();  // to remove the refresh of the page  
             const response = await axios.post(backendUrl + '/api/user/admin',{email,password});
                   
              if(response.data.success)

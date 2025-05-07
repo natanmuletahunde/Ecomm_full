@@ -62,7 +62,7 @@ const ShopContextProvider = (props) => {
                 }
                 catch(e){
                     console.log(e); 
-                
+                  
                 } 
             }
           }

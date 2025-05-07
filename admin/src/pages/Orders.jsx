@@ -2,19 +2,20 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { toast } from 'react-toastify'
 import { backendUrl, currency } from '../App'
-import { assets } from '../assets/assets'
+import { assets } from '../assets/assets.js'
 
 const Orders = ({ token }) => {
-  const [orders, setOrders] = useState([])
-
+  const [orders, setOrders] = useState([])//create like container used fo carry the current items and the updated items
   const fetchAllOrders = async () => {
-    if (!token) return null
+    if (!token) {
+      return null
+    } 
     try {
-      const response = await axios.post(backendUrl + '/api/orders/list', {}, { headers: { token } })
-
+  const response = await axios.post(backendUrl + '/api/order/list',{}, { headers: { token } })
       if (response.data.success) {
-        setOrders(response.data.orders)
-      } else {
+           setOrders(response.data.orders)
+      }
+      else {
         toast.error(response.error)
       }
     } catch (error) {

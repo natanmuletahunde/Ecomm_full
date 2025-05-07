@@ -10,6 +10,7 @@ const List = ({token}) => {
     try {
       const response = await axios.get(`${backendUrl}/api/product/list`)
       if (response.data.success) {
+        console.log("response.data.products: ",response.data.products)
         setList(response.data.products)
       } else {
         toast.error(response.data.message)
@@ -19,13 +20,12 @@ const List = ({token}) => {
       toast.error(error.message)
     }
   }
-
   const removeProduct = async (id) => {
     try {
       const response = await axios.post(
         backendUrl + '/api/product/remove',
-        { id },
-        { headers: { token } }
+        {id},
+        {headers:{token}}
       )
       if (response.data.success) {
         toast.success(response.data.products)
@@ -41,7 +41,7 @@ const List = ({token}) => {
 
   useEffect(() => {
     fetchList()
-  }, [])
+  }, []) 
 
   return (      
     <>
@@ -61,14 +61,14 @@ const List = ({token}) => {
             className='grid grid-cols-[1fr_3fr_1fr_1fr_1fr] items-center border px-2 py-1 text-sm'
           >
             <img 
-              src={`${backendUrl}/uploads/${item.image[0]}`} 
+              src={item.images[0]} 
               alt={item.name} 
               className='h-12 w-12 object-cover rounded'
             />
             <p>{item.name}</p>
             <p>{item.category}</p>
             <p>{currency} {item.price}</p>
-            <p onClick={() => removeProduct(item._id)} className='text-center cursor-pointer text-red-600 hover:font-bold'>X</p>
+            <p onClick={()=> removeProduct(item._id)} className='text-center cursor-pointer text-red-600 hover:font-bold'>X</p>
           </div>
         ))}
       </div>

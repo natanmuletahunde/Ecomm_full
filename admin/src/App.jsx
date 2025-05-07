@@ -17,19 +17,19 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('token', token);
-  }, [token]);
+  }, [token]); // this useEffect is used for   updating the token every time when we login and ,logout in the  website  
 
   return (
     <div className='bg-gray-50 min-h-screen'>
       <ToastContainer />
-      {token === '' ? (
+      {token === '' ? (   // this show us if  their is token show the use  the navbar the side bar and all the collection of the sidebars  if the user is not have token  show the login page 
         <Login setToken={setToken} />
       ) : (
         <>
           <Navbar setToken={setToken} />
           <hr />
           <div className='flex w-full'>
-            <Sidebar />
+            <Sidebar/>
             <div className='w-[78%] mx-auto ml-[max(5vw,25px)] my-8 text-gray-600 text-base'>
               <Routes>
                 <Route path='/add' element={<Add token={token} />} />
