@@ -2,12 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import { ShopContext } from '../context/ShopContext';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom'; // ✅ Import useNavigate
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [currentState, setCurrentState] = useState('Login');
-  const { token, setToken, getProductData, backendUrl } = useContext(ShopContext);
-  const navigate = useNavigate(); // ✅ Call useNavigate here
+  const { token, setToken,   } = useContext(ShopContext);
+  const navigate = useNavigate();
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
@@ -19,66 +19,72 @@ const Login = () => {
     event.preventDefault();
     try {
       if (currentState === 'Sign Up') {
-        const response = await axios.post(backendUrl + '/api/user/register', {
+        const response = await axios.post('http://localhost:4000/api/user/register', {
           name,
           email,
           password,
         });
+
         if (response.data.success) {
-          setToken(response.data.token);
-          localStorage.setItem('token', response.data.token);
+          const userToken = response.data.token;
+          setToken(userToken);
+          localStorage.setItem('token', userToken);
           setFormStatus('Registration Successful!');
-          navigate('/'); // ✅ Redirect to homepage after signup
+          toast.success('Registration Successful!');
+          navigate('/');
         } else {
-          toast.error(response.data.message);
+          toast.error(response.data.message || 'Signup failed');
         }
       } else {
-        const response = await axios.post(backendUrl + '/api/user/login', {
+        const response = await axios.post('http://localhost:4000/api/user/login', {
           email,
           password,
         });
+
         if (response.data.success) {
-          setToken(response.data.token);
-          localStorage.setItem('token', response.data.token);
+          const userToken = response.data.token;
+          setToken(userToken);
+          localStorage.setItem('token', userToken);
           setFormStatus('Login Successful!');
-          navigate('/'); // ✅ Redirect after login
+          toast.success('Login Successful!');
+          navigate('/');
         } else {
-          toast.error(response.data.message);
+          toast.error(response.data.message || 'Login failed');
         }
       }
     } catch (error) {
-      console.log(error);
-      toast.error("Something went wrong. Please try again.");
+      console.error(error);
+      toast.error('Something went wrong. Please try again.');
     }
   };
 
   useEffect(() => {
     if (token) {
-      getProductData();
+      // getProductData();
     }
   }, [token]);
 
   useEffect(() => {
-    if (!token && localStorage.getItem('token')) {
-      setToken(localStorage.getItem('token'));
+    const localToken = localStorage.getItem('token');
+    if (!token && localToken) {
+      setToken(localToken);
     }
   }, []);
 
   return (
-    <div className="transition-all duration-500 ease-in-out">
+    <div className="transition-all duration-500 ease-in-out min-h-screen flex justify-center items-center bg-gray-50">
       <form
         onSubmit={onSubmitHandler}
-        className="flex flex-col items-center w-[90%] sm:max-w-996 m-auto mt-14 gap-4 text-gray-800"
+        className="flex flex-col items-center w-[90%] sm:max-w-md bg-white p-8 rounded-lg shadow-lg gap-5 text-gray-800"
       >
-        <div className="inline-flex items-center gap-2 mb-2 mt-10 relative">
-          <p className="prata-regular text-3xl">{currentState}</p>
+        <div className="inline-flex items-center gap-2 mb-2 relative">
+          <p className="text-3xl font-semibold">{currentState}</p>
           <span className="absolute bottom-0 left-0 h-[2px] bg-black w-full animate-pulse"></span>
         </div>
-
-        {currentState === 'Login' ? null : (
+        {currentState === 'Sign Up' && (
           <input
             type="text"
-            className="w-72 px-3 py-2 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-300"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
             placeholder="Name"
             required
             value={name}
@@ -88,55 +94,60 @@ const Login = () => {
 
         <input
           type="email"
-          className="w-72 px-3 py-2 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-300"
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
           placeholder="Email"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <div className="relative w-72">
+        <div className="relative w-full">
           <input
             type={showPassword ? 'text' : 'password'}
-            className="w-full px-3 py-2 border border-gray-800 focus:outline-none focus:ring-2 focus:ring-black transition-all duration-300"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
             placeholder="Password"
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <span
-            className="absolute right-3 top-2.5 text-sm cursor-pointer text-gray-500 hover:text-black"
+            className="absolute right-4 top-3 text-gray-500 cursor-pointer hover:text-black text-lg"
             onClick={() => setShowPassword(!showPassword)}
           >
             {showPassword ? '🙈' : '👁️'}
           </span>
         </div>
 
-        <div className="w-full flex flex-col items-center text-sm mt-[-8px] gap-2">
-          <p className="cursor-pointer hover:underline">Forgot your password?</p>
+        <div className="w-full flex flex-col items-center text-sm gap-2">
+          <p className="cursor-pointer hover:underline text-gray-600">
+             forget your password add another one 
+          </p>
           {currentState === 'Login' ? (
             <p
               onClick={() => setCurrentState('Sign Up')}
               className="cursor-pointer hover:text-blue-600"
             >
-              Create an account
+              Don't have an account? Sign Up
             </p>
           ) : (
             <p
               onClick={() => setCurrentState('Login')}
               className="cursor-pointer hover:text-blue-600"
             >
-              Login Here
+              Already have an account? Log In
             </p>
           )}
         </div>
 
-        <button className="bg-black text-white font-light px-8 py-2 mt-4 hover:bg-gray-900 transition-all duration-300">
+        <button
+          type="submit"
+          className="bg-black text-white font-medium w-full py-2 rounded-md hover:bg-gray-800 transition-all duration-300"
+        >
           {currentState === 'Login' ? 'Sign In' : 'Sign Up'}
         </button>
 
         {formStatus && (
-          <p className="mt-4 text-green-600 font-medium animate-bounce">
+          <p className="mt-2 text-green-600 font-medium animate-bounce">
             {formStatus}
           </p>
         )}
